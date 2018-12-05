@@ -63,3 +63,6 @@ Once your appsettings are updated and you've entered in some seed data, you shou
 1. Use the `Add-Migration GrowTables` command.
 1. Once Visual Studio shows you the migration file, execute `Update-Database` to generate your tables.
 1. Use the SQL Server Object Explorer to verify that everything worked as expected.
+
+### Grow ERD
+![ERD](GrowERD.png)
