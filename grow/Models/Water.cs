@@ -13,11 +13,6 @@ namespace grow.Models
         public int WaterId { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated { get; set; }
-
-        [Required]
         [Display(Name = "Regularity of Watering")]
         public string Regularity { get; set; }
 
