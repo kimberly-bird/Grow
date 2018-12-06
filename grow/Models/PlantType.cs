@@ -11,11 +11,6 @@ namespace grow.Models
         public int PlantTypeId { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated { get; set; }
-
-        [Required]
         [Display(Name = "Type of Plant")]
         public string Name { get; set; }
 

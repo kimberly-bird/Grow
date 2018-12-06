@@ -13,11 +13,6 @@ namespace grow.Models
         public int LightId { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated { get; set; }
-
-        [Required]
         [Display(Name = "Light Requirements")]
         public string Requirements { get; set; }
 
