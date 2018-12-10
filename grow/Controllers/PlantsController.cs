@@ -7,17 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using grow.Data;
 using grow.Models;
+using grow.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace grow.Controllers
 {
     public class PlantsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PlantsController(ApplicationDbContext context)
+        public PlantsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager; ;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Plants
         public async Task<IActionResult> Index()
@@ -59,17 +66,23 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId")] Plant plant)
+        public async Task<IActionResult> Create(CreatePlantViewModel plantVM)
         {
+            // Remove user and userId
+            ModelState.Remove("Plant.UserId");
+            ModelState.Remove("Plant.User");
+
             if (ModelState.IsValid)
             {
-                _context.Add(plant);
+                // Get the current user
+                var user = await GetCurrentUserAsync();
+                plantVM.Plant.User = user;
+                plantVM.Plant.UserId = user.Id;
+                _context.Add(plantVM);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name", plant.PlantTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", plant.UserId);
-            return View(plant);
+            return View(plantVM);
         }
 
         // GET: Plants/Edit/5

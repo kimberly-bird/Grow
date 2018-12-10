@@ -1,4 +1,4 @@
-﻿@model grow.Models.Plant
+﻿@model grow.Models.ViewModels.CreatePlantViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,27 +12,23 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Plant.Name" class="control-label"></label>
+                <input asp-for="Plant.Name" class="form-control" />
+                <span asp-validation-for="Plant.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
+                <label asp-for="Plant.Notes" class="control-label"></label>
+                <input asp-for="Plant.Notes" class="form-control" />
+                <span asp-validation-for="Plant.Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InitialImage" class="control-label"></label>
-                <input asp-for="InitialImage" class="form-control" />
-                <span asp-validation-for="InitialImage" class="text-danger"></span>
-            </div>
-            <div class="form-group hidden">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <label asp-for="Plant.InitialImage" class="control-label"></label>
+                <input asp-for="Plant.InitialImage" class="form-control" />
+                <span asp-validation-for="Plant.InitialImage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PlantTypeId" class="control-label"></label>
-                <select asp-for="PlantTypeId" class ="form-control" asp-items="ViewBag.PlantTypeId"></select>
+                <label asp-for="Plant.PlantTypeId" class="control-label"></label>
+                <select asp-for="Plant.PlantTypeId" class ="form-control" asp-items="ViewBag.PlantTypeId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
