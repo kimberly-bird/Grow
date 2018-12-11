@@ -17,5 +17,13 @@ namespace grow.Data
         public DbSet<PlantAudit> PlantAudit { get; set; }
         public DbSet<PlantType> PlantType { get; set; }
         public DbSet<Water> Water { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Plant>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
+        }
     }
 }

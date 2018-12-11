@@ -36,6 +36,7 @@ namespace grow.Models
         [Required]
         [Display(Name = "Type of Plant")]
         public int PlantTypeId { get; set; }
+
         public PlantType PlantType { get; set; }
     }
 }

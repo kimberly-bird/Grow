@@ -78,7 +78,7 @@ namespace grow.Controllers
                 var user = await GetCurrentUserAsync();
                 plantVM.Plant.User = user;
                 plantVM.Plant.UserId = user.Id;
-                _context.Add(plantVM);
+                _context.Add(plantVM.Plant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

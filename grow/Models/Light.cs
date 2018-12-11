@@ -15,7 +15,5 @@ namespace grow.Models
         [Required]
         [Display(Name = "Light Requirements")]
         public string Requirements { get; set; }
-
-        public virtual ICollection<Plant> Plants { get; set; }
     }
 }

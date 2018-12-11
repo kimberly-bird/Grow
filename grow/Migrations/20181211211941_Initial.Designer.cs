@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using grow.Data;
 
-namespace grow.Data.Migrations
+namespace grow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181205171305_Initial")]
+    [Migration("20181211211941_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,9 +84,6 @@ namespace grow.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<string>("Requirements")
                         .IsRequired();
 
@@ -102,11 +99,10 @@ namespace grow.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("InitialImage");
-
-                    b.Property<int?>("LightId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -118,17 +114,11 @@ namespace grow.Data.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<int?>("WaterId");
-
                     b.HasKey("PlantId");
-
-                    b.HasIndex("LightId");
 
                     b.HasIndex("PlantTypeId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WaterId");
 
                     b.ToTable("Plant");
                 });
@@ -173,9 +163,6 @@ namespace grow.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -189,9 +176,6 @@ namespace grow.Data.Migrations
                     b.Property<int>("WaterId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Regularity")
                         .IsRequired();
@@ -317,10 +301,6 @@ namespace grow.Data.Migrations
 
             modelBuilder.Entity("grow.Models.Plant", b =>
                 {
-                    b.HasOne("grow.Models.Light")
-                        .WithMany("Plants")
-                        .HasForeignKey("LightId");
-
                     b.HasOne("grow.Models.PlantType", "PlantType")
                         .WithMany("Plants")
                         .HasForeignKey("PlantTypeId")
@@ -330,10 +310,6 @@ namespace grow.Data.Migrations
                         .WithMany("Plants")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("grow.Models.Water")
-                        .WithMany("Plants")
-                        .HasForeignKey("WaterId");
                 });
 
             modelBuilder.Entity("grow.Models.PlantAudit", b =>
