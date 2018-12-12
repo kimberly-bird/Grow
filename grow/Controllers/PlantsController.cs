@@ -29,7 +29,9 @@ namespace grow.Controllers
         // GET: Plants
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Plant.Include(p => p.PlantType).Include(p => p.User);
+            var user = await GetCurrentUserAsync();
+
+            var applicationDbContext = _context.Plant.Include(p => p.PlantType).Include(p => p.User).Where(u => u.User == user);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -92,14 +94,18 @@ namespace grow.Controllers
             {
                 return NotFound();
             }
+            //var user = await GetCurrentUserAsync();
 
+            //var applicationDbContext = _context.Plant.Include(p => p.PlantType).Include(p => p.User).Where(u => u.User == user).Where(u => u.UserId = user.Id);
+            //return View(await applicationDbContext.ToListAsync());
             var plant = await _context.Plant.FindAsync(id);
+
             if (plant == null)
             {
                 return NotFound();
             }
+
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name", plant.PlantTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", plant.UserId);
             return View(plant);
         }
 
@@ -115,10 +121,17 @@ namespace grow.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Get the current user
+                    var user = await GetCurrentUserAsync();
+                    plant.User = user;
+
                     _context.Update(plant);
                     await _context.SaveChangesAsync();
                 }
@@ -136,7 +149,7 @@ namespace grow.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name", plant.PlantTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", plant.UserId);
+
             return View(plant);
         }
 
