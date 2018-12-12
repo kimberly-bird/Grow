@@ -15,6 +15,7 @@ namespace grow.Models
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = "Date Added")]
         public DateTime DateCreated { get; set; }
 
         [Required]
@@ -37,6 +38,7 @@ namespace grow.Models
         [Display(Name = "Type of Plant")]
         public int PlantTypeId { get; set; }
 
+        [Display(Name = "Type of Plant")]
         public PlantType PlantType { get; set; }
     }
 }
