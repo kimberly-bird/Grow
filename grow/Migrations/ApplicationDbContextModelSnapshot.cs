@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using grow.Data;
 
-namespace grow.Data.Migrations
+namespace grow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -97,11 +97,10 @@ namespace grow.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("InitialImage");
-
-                    b.Property<int?>("LightId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -113,17 +112,11 @@ namespace grow.Data.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<int?>("WaterId");
-
                     b.HasKey("PlantId");
-
-                    b.HasIndex("LightId");
 
                     b.HasIndex("PlantTypeId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WaterId");
 
                     b.ToTable("Plant");
                 });
@@ -306,10 +299,6 @@ namespace grow.Data.Migrations
 
             modelBuilder.Entity("grow.Models.Plant", b =>
                 {
-                    b.HasOne("grow.Models.Light")
-                        .WithMany("Plants")
-                        .HasForeignKey("LightId");
-
                     b.HasOne("grow.Models.PlantType", "PlantType")
                         .WithMany("Plants")
                         .HasForeignKey("PlantTypeId")
@@ -319,10 +308,6 @@ namespace grow.Data.Migrations
                         .WithMany("Plants")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("grow.Models.Water")
-                        .WithMany("Plants")
-                        .HasForeignKey("WaterId");
                 });
 
             modelBuilder.Entity("grow.Models.PlantAudit", b =>

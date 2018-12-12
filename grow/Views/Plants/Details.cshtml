@@ -1,0 +1,47 @@
+﻿@model grow.Models.Plant
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Plant Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InitialImage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InitialImage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PlantType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PlantType.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PlantId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
