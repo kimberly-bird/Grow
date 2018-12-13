@@ -1,0 +1,69 @@
+﻿@model grow.Models.PlantAudit
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PlantAudit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Plant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Plant.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Water)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Water.Regularity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Light)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Light.Requirements)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequirementsChanged)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequirementsChanged)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InfestationIssue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InfestationIssue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedImage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedImage)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PlantAuditId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -21,7 +21,7 @@ namespace grow.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Plant>()
+            modelBuilder.Entity<PlantAudit>()
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("GETDATE()");
         }
