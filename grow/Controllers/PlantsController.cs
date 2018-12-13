@@ -38,6 +38,7 @@ namespace grow.Controllers
         // GET: Plants/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
             if (id == null)
             {
                 return NotFound();
@@ -52,7 +53,7 @@ namespace grow.Controllers
                 return NotFound();
             }
 
-            return View(plant);
+            return View(viewmodel);
         }
 
         // GET: Plants/Create

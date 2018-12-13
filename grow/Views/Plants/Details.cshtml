@@ -1,4 +1,4 @@
-﻿@model grow.Models.Plant
+﻿@model grow.Models.ViewModels.DetailsPlantViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,38 +10,39 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.Plant.DateCreated)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DateCreated)
+            @Html.DisplayFor(model => model.Plant.DateCreated)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Plant.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Plant.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Notes)
+            @Html.DisplayNameFor(model => model.Plant.Notes)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Notes)
+            @Html.DisplayFor(model => model.Plant.Notes)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.InitialImage)
+            @Html.DisplayNameFor(model => model.Plant.InitialImage)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.InitialImage)
+            @Html.DisplayFor(model => model.Plant.InitialImage)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.PlantType)
+            @Html.DisplayNameFor(model => model.Plant.PlantType)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.PlantType.Name)
+            @Html.DisplayFor(model => model.Plant.PlantType.Name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PlantId">Edit</a> |
+    @*<a asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> |*@ 
+    @*<a asp-action="Create" asp-route-id="@Model.PlantAudit">Edit Plant Requirements</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>
