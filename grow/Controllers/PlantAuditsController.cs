@@ -32,6 +32,8 @@ namespace grow.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+
         // GET: PlantAudits/Details/5
         public async Task<IActionResult> Details(int? id)
         {

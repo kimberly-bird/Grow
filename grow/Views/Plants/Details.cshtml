@@ -40,6 +40,19 @@
             @Html.DisplayFor(model => model.Plant.PlantType.Name)
         </dd>
     </dl>
+    <h4>Plant Requirements</h4>
+    @foreach (PlantAudit audit in Model.PlantAudit)
+    {
+        <div>Date: @audit.DateCreated</div>
+        <div>Light Requirements: @audit.Light.Requirements</div>
+        <div>Water Regularity: @audit.Water.Regularity</div>
+        <div>Infestation Issue? @audit.InfestationIssue</div>
+        <div>Notes: @audit.Notes</div>
+        <hr />
+    }
+
+
+    <button>Update this plant's requirements</button>
 </div>
 <div>
     @*<a asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> |*@ 

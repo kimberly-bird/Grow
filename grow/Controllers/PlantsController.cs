@@ -38,16 +38,18 @@ namespace grow.Controllers
         // GET: Plants/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
             if (id == null)
             {
                 return NotFound();
             }
 
+            DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
             var plant = await _context.Plant
                 .Include(p => p.PlantType)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
+
+            viewmodel.Plant = plant;
             if (plant == null)
             {
                 return NotFound();
@@ -95,10 +97,6 @@ namespace grow.Controllers
             {
                 return NotFound();
             }
-            //var user = await GetCurrentUserAsync();
-
-            //var applicationDbContext = _context.Plant.Include(p => p.PlantType).Include(p => p.User).Where(u => u.User == user).Where(u => u.UserId = user.Id);
-            //return View(await applicationDbContext.ToListAsync());
             var plant = await _context.Plant.FindAsync(id);
 
             if (plant == null)
