@@ -55,13 +55,27 @@ namespace grow.Controllers
             return View(plantAudit);
         }
 
-        // GET: PlantAudits/Create
-        public IActionResult Create()
+        // GET: PlantAudits/Create/4
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements");
-            ViewData["PlantId"] = new SelectList(_context.Plant, "PlantId", "Name");
-            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            // get plant based on id passed in
+            var plant = await _context.Plant.FindAsync(id);
+
+            if (plant == null)
+            {
+                return NotFound();
+            }
+
+            CreatePlantAuditViewModel viewModel = new CreatePlantAuditViewModel();
+
+            viewModel.Plant = plant;
+
+            return View(viewModel);
         }
 
         // POST: PlantAudits/Create

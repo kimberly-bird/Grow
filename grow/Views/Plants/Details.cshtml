@@ -40,7 +40,12 @@
             @Html.DisplayFor(model => model.Plant.PlantType.Name)
         </dd>
     </dl>
+    <div>
+        <a asp-controller="PlantAudits" asp-action="Create" asp-route-id="@Model.Plant.PlantId">Update this plant's requirements</a>
+    </div>
+
     <h4>Plant Requirements</h4>
+
     @foreach (PlantAudit audit in Model.PlantAudit)
     {
         <div>Date: @audit.DateCreated</div>
@@ -51,11 +56,8 @@
         <hr />
     }
 
-
-    <button>Update this plant's requirements</button>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> |*@ 
-    @*<a asp-action="Create" asp-route-id="@Model.PlantAudit">Edit Plant Requirements</a> |*@
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> | 
+    <a asp-action="Index">Back to List of Plants</a>
 </div>

@@ -61,8 +61,6 @@ namespace grow.Controllers
         // GET: Plants/Create
         public IActionResult Create()
         {
-            ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name");
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
         }
 
