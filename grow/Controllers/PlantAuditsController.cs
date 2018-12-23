@@ -94,7 +94,7 @@ namespace grow.Controllers
 
                 _context.Add(model.PlantAudit);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Plants", new { @id = id});
             }
  
             return View(model);
