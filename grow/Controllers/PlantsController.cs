@@ -49,7 +49,10 @@ namespace grow.Controllers
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
 
+            var plantAudit = _context.PlantAudit.Where(pa => pa.PlantId == id).OrderByDescending(o => o.DateCreated).ToList();
+
             viewmodel.Plant = plant;
+            viewmodel.PlantAudit = plantAudit;
             if (plant == null)
             {
                 return NotFound();
@@ -62,7 +65,6 @@ namespace grow.Controllers
         public IActionResult Create()
         {
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name");
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
         }
 
@@ -71,23 +73,24 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePlantViewModel plantVM)
+        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId")] Plant plant)
         {
             // Remove user and userId
-            ModelState.Remove("Plant.UserId");
-            ModelState.Remove("Plant.User");
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+            ModelState.Remove("DateCreated");
 
             if (ModelState.IsValid)
             {
                 // Get the current user
                 var user = await GetCurrentUserAsync();
-                plantVM.Plant.User = user;
-                plantVM.Plant.UserId = user.Id;
-                _context.Add(plantVM.Plant);
+                plant.User = user;
+                plant.UserId = user.Id;
+                _context.Add(plant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(plantVM);
+            return View(plant);
         }
 
         // GET: Plants/Edit/5

@@ -55,13 +55,22 @@ namespace grow.Controllers
             return View(plantAudit);
         }
 
-        // GET: PlantAudits/Create
-        public IActionResult Create()
+        // GET: PlantAudits/Create/4
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements");
-            ViewData["PlantId"] = new SelectList(_context.Plant, "PlantId", "Name");
-            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            // get plant based on id passed in
+            var plant = await _context.Plant.FindAsync(id);
+
+            CreatePlantAuditViewModel viewModel = new CreatePlantAuditViewModel(_context);
+
+            viewModel.Plant = plant;
+
+            return View(viewModel);
         }
 
         // POST: PlantAudits/Create
@@ -69,24 +78,26 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantAuditId,DateCreated,PlantId,WaterId,LightId,RequirementsChanged,InfestationIssue,Notes,UpdatedImage")] PlantAudit plantAudit)
+        public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
+            ModelState.Remove("PlantAudit.PlantId");
 
             if (ModelState.IsValid)
             {
                 // Get the current user
                 var user = await GetCurrentUserAsync();
 
-                _context.Add(plantAudit);
+                var plant = await _context.Plant.FindAsync(id);
+                model.PlantAudit.PlantId = plant.PlantId;
+
+                _context.Add(model.PlantAudit);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Plants", new { @id = id});
             }
-            //ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements", plantAudit.LightId);
-            //ViewData["PlantId"] = new SelectList(_context.Plant, "PlantId", "Name", plantAudit.PlantId);
-            //ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity", plantAudit.WaterId);
-            return View(plantAudit);
+ 
+            return View(model);
         }
 
         // GET: PlantAudits/Edit/5

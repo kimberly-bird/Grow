@@ -1,4 +1,4 @@
-﻿@model grow.Models.PlantAudit
+﻿@model grow.Models.ViewModels.CreatePlantAuditViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,41 +12,42 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PlantId" class="control-label"></label>
-                <select asp-for="PlantId" class ="form-control" asp-items="ViewBag.PlantId"></select>
+            <div class="form-group hidden">
+                <label asp-for="PlantAudit.PlantId" class="control-label"></label>
+                <input asp-for="PlantAudit.PlantId" class="form-control" />
+                <span asp-validation-for="PlantAudit.PlantId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WaterId" class="control-label"></label>
-                <select asp-for="WaterId" class ="form-control" asp-items="ViewBag.WaterId"></select>
+                <label asp-for="PlantAudit.WaterId" class="control-label"></label>
+                <select asp-for="PlantAudit.WaterId" class="form-control" asp-items="@Model.WaterList"></select>
             </div>
             <div class="form-group">
-                <label asp-for="LightId" class="control-label"></label>
-                <select asp-for="LightId" class ="form-control" asp-items="ViewBag.LightId"></select>
+                <label asp-for="PlantAudit.LightId" class="control-label"></label>
+                <select asp-for="PlantAudit.LightId" class="form-control" asp-items="@Model.LightList"></select>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="RequirementsChanged" /> @Html.DisplayNameFor(model => model.RequirementsChanged)
+                        <input asp-for="PlantAudit.RequirementsChanged" /> @Html.DisplayNameFor(model => model.PlantAudit.RequirementsChanged)
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="InfestationIssue" /> @Html.DisplayNameFor(model => model.InfestationIssue)
+                        <input asp-for="PlantAudit.InfestationIssue" /> @Html.DisplayNameFor(model => model.PlantAudit.InfestationIssue)
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
+                <label asp-for="PlantAudit.Notes" class="control-label"></label>
+                <input asp-for="PlantAudit.Notes" class="form-control" />
+                <span asp-validation-for="PlantAudit.Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UpdatedImage" class="control-label"></label>
-                <input asp-for="UpdatedImage" class="form-control" />
-                <span asp-validation-for="UpdatedImage" class="text-danger"></span>
+                <label asp-for="PlantAudit.UpdatedImage" class="control-label"></label>
+                <input asp-for="PlantAudit.UpdatedImage" class="form-control" />
+                <span asp-validation-for="PlantAudit.UpdatedImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

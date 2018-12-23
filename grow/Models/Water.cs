@@ -15,5 +15,8 @@ namespace grow.Models
         [Required]
         [Display(Name = "Regularity of Watering")]
         public string Regularity { get; set; }
+
+
+        public virtual ICollection<PlantAudit> PlantAudits { get; set; }
     }
 }
