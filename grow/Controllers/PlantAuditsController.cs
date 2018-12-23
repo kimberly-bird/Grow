@@ -78,15 +78,19 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePlantAuditViewModel model)
+        public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
+            ModelState.Remove("PlantAudit.PlantId");
 
             if (ModelState.IsValid)
             {
                 // Get the current user
                 var user = await GetCurrentUserAsync();
+
+                var plant = await _context.Plant.FindAsync(id);
+                model.PlantAudit.PlantId = plant.PlantId;
 
                 _context.Add(model.PlantAudit);
                 await _context.SaveChangesAsync();
