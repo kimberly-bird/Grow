@@ -49,7 +49,7 @@ namespace grow.Controllers
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
 
-            var plantAudit = _context.PlantAudit.Where(pa => pa.PlantId == id).ToList();
+            var plantAudit = _context.PlantAudit.Where(pa => pa.PlantId == id).OrderByDescending(o => o.DateCreated).ToList();
 
             viewmodel.Plant = plant;
             viewmodel.PlantAudit = plantAudit;
