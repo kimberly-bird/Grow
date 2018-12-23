@@ -66,12 +66,7 @@ namespace grow.Controllers
             // get plant based on id passed in
             var plant = await _context.Plant.FindAsync(id);
 
-            if (plant == null)
-            {
-                return NotFound();
-            }
-
-            CreatePlantAuditViewModel viewModel = new CreatePlantAuditViewModel();
+            CreatePlantAuditViewModel viewModel = new CreatePlantAuditViewModel(_context);
 
             viewModel.Plant = plant;
 
@@ -83,7 +78,7 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantAuditId,DateCreated,PlantId,WaterId,LightId,RequirementsChanged,InfestationIssue,Notes,UpdatedImage")] PlantAudit plantAudit)
+        public async Task<IActionResult> Create(CreatePlantAuditViewModel model)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
@@ -93,14 +88,12 @@ namespace grow.Controllers
                 // Get the current user
                 var user = await GetCurrentUserAsync();
 
-                _context.Add(plantAudit);
+                _context.Add(model.PlantAudit);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements", plantAudit.LightId);
-            //ViewData["PlantId"] = new SelectList(_context.Plant, "PlantId", "Name", plantAudit.PlantId);
-            //ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity", plantAudit.WaterId);
-            return View(plantAudit);
+ 
+            return View(model);
         }
 
         // GET: PlantAudits/Edit/5

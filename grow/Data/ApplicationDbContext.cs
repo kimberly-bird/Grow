@@ -24,6 +24,11 @@ namespace grow.Data
             modelBuilder.Entity<PlantAudit>()
                 .Property(b => b.DateCreated)
                 .HasDefaultValueSql("GETDATE()");
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Plant>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
         }
     }
 }
