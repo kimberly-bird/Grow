@@ -16,7 +16,7 @@ namespace grow.Models.ViewModels
         public DetailsPlantViewModel() { }
 
         public DetailsPlantViewModel(ApplicationDbContext ctx)
-        {
+        { 
             PlantAudit = ctx.PlantAudit.ToList();
 
             foreach (PlantAudit pa in PlantAudit)
