@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using grow.Data;
 using grow.Models;
+using grow.Models.ViewModels;
 
 namespace grow.Controllers
 {
@@ -33,14 +34,24 @@ namespace grow.Controllers
                 return NotFound();
             }
 
+            DetailsWateringViewModel model = new DetailsWateringViewModel(_context);
+
             var water = await _context.Water
+                .Include(pa => pa.PlantAudits)
                 .FirstOrDefaultAsync(m => m.WaterId == id);
+
+            model.Water = water;
+
+            //var plants = _context.Plant.Where(p => p.PlantId == id).ToList();
+
+            //model.Plants = plants;
+
             if (water == null)
             {
                 return NotFound();
             }
 
-            return View(water);
+            return View(model);
         }
 
         // GET: Waters/Create
