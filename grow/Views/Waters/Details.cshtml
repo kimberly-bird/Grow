@@ -15,7 +15,18 @@
         <dd>
             @Html.DisplayFor(model => model.Regularity)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Plants)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (PlantAudit pa in Model.PlantAudits)
+                {
+                    <li>@pa.Plant.Name</li>
+                }
+            </ul>
     </dl>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.WaterId">Edit</a> |

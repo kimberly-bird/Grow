@@ -18,5 +18,6 @@ namespace grow.Models
 
 
         public virtual ICollection<PlantAudit> PlantAudits { get; set; }
+        public virtual List<Plant> Plants { get; set; }
     }
 }

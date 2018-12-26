@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using grow.Data;
 using grow.Models;
+using grow.Models.ViewModels;
 
 namespace grow.Controllers
 {
@@ -34,7 +35,10 @@ namespace grow.Controllers
             }
 
             var water = await _context.Water
+                .Include(pa => pa.PlantAudits)
+                    .ThenInclude(p => p.Plant)
                 .FirstOrDefaultAsync(m => m.WaterId == id);
+
             if (water == null)
             {
                 return NotFound();
