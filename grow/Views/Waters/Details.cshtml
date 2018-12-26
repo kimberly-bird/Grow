@@ -1,4 +1,4 @@
-﻿@model grow.Models.ViewModels.DetailsWateringViewModel
+﻿@model grow.Models.Water
 
 @{
     ViewData["Title"] = "Details";
@@ -10,22 +10,25 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Water.Regularity)
+            @Html.DisplayNameFor(model => model.Regularity)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Water.Regularity)
+            @Html.DisplayFor(model => model.Regularity)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Plants)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (PlantAudit pa in Model.PlantAudits)
+                {
+                    <li>@pa.Plant.Name</li>
+                }
+            </ul>
     </dl>
 
-    <h4>Plants</h4>
-
-    @foreach (Plant plant in Model.Plants)
-    {
-        <div>@plant.Name</div>
-        <hr />
-    }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Water.WaterId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.WaterId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -34,24 +34,17 @@ namespace grow.Controllers
                 return NotFound();
             }
 
-            DetailsWateringViewModel model = new DetailsWateringViewModel(_context);
-
             var water = await _context.Water
                 .Include(pa => pa.PlantAudits)
+                    .ThenInclude(p => p.Plant)
                 .FirstOrDefaultAsync(m => m.WaterId == id);
-
-            model.Water = water;
-
-            //var plants = _context.Plant.Where(p => p.PlantId == id).ToList();
-
-            //model.Plants = plants;
 
             if (water == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(water);
         }
 
         // GET: Waters/Create

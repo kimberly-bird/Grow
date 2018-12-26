@@ -17,6 +17,7 @@ namespace grow.Models
         public string Regularity { get; set; }
 
 
-        public virtual List<PlantAudit> PlantAudits { get; set; }
+        public virtual ICollection<PlantAudit> PlantAudits { get; set; }
+        public virtual List<Plant> Plants { get; set; }
     }
 }
