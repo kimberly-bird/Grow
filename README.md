@@ -8,6 +8,8 @@ Grow implements the Identity framework, and extends the base User object with th
 It shows how to remove a model's property from the automatic model binding in a controller method by using `ModelState.Remove()`.
 Make sure you look in the `DbInitializer` class to see the product types that are seeded for you.
 
+This app uses CloudinaryDotNet to upload images and stores the URL in the Grow Database. Visit their repo here to learn more about Cloudinary: https://github.com/cloudinary/CloudinaryDotNet
+
 ## Setup
 
 ### Git and SQL Server Configuration
@@ -43,17 +45,6 @@ Make sure you look in the `DbInitializer` class to see the product types that ar
       "AllowedHosts": "*"
     }
     ```
-
-### Seeding the Database
-
-[NEEDS UPDATING]
-You will want to seed your database with some default values. Open the `ApplicationDbContext.cs` file and scroll all the way to the bottom. You will the the following code.
-
-```cs
-modelBuilder.Entity<Plant> ().HasData (...)
-```
-
-The `HasData()` method lets you create one, or more, instances of a database model. Those instances will be turned into `INSERT INTO` SQL statements when you generate a migration either through the Package Manager Console with `Add-Migration MigrationName` or through the command line with `dotnet ef migrations add MigrationName`.
 
 ### Generating the Database
 
