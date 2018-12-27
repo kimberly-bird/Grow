@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,8 +26,10 @@ namespace grow.Models
         [Display(Name = "Notes about this plant")]
         public string Notes { get; set; }
 
+        [NotMappedAttribute]
+        [FileExtensions(Extensions = "jpg,jpeg")]
         [Display(Name = "Image")]
-        public string InitialImage { get; set; }
+        public IFormFile InitialImage { get; set; }
 
         [Required]
         public string UserId { get; set; }

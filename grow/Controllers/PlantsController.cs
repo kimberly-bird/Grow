@@ -10,6 +10,8 @@ using grow.Models;
 using grow.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace grow.Controllers
 {
@@ -86,6 +88,17 @@ namespace grow.Controllers
                 var user = await GetCurrentUserAsync();
                 plant.User = user;
                 plant.UserId = user.Id;
+
+                var file = plant.InitialImage;
+                var parsedContentDisposition =
+                    ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+                var filename = Path.Combine(_context.WebRootPath,
+                    "Uploads", parsedContentDisposition.FileName.Trim('"'));
+                using (var stream = System.IO.File.OpenWrite(filename))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
                 _context.Add(plant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
