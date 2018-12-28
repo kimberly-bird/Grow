@@ -205,7 +205,8 @@ namespace grow.Migrations
                     Notes = table.Column<string>(nullable: true),
                     InitialImage = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
-                    PlantTypeId = table.Column<int>(nullable: false)
+                    PlantTypeId = table.Column<int>(nullable: false),
+                    WaterId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,6 +223,12 @@ namespace grow.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Plant_Water_WaterId",
+                        column: x => x.WaterId,
+                        principalTable: "Water",
+                        principalColumn: "WaterId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,7 +237,7 @@ namespace grow.Migrations
                 {
                     PlantAuditId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     PlantId = table.Column<int>(nullable: false),
                     WaterId = table.Column<int>(nullable: false),
                     LightId = table.Column<int>(nullable: false),
@@ -259,7 +266,7 @@ namespace grow.Migrations
                         column: x => x.WaterId,
                         principalTable: "Water",
                         principalColumn: "WaterId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -312,6 +319,11 @@ namespace grow.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Plant_WaterId",
+                table: "Plant",
+                column: "WaterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlantAudit_LightId",
                 table: "PlantAudit",
                 column: "LightId");
@@ -357,13 +369,13 @@ namespace grow.Migrations
                 name: "Plant");
 
             migrationBuilder.DropTable(
-                name: "Water");
-
-            migrationBuilder.DropTable(
                 name: "PlantType");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Water");
         }
     }
 }

@@ -26,10 +26,8 @@ namespace grow.Models
         [Display(Name = "Notes about this plant")]
         public string Notes { get; set; }
 
-        [NotMappedAttribute]
-        [FileExtensions(Extensions = "jpg,jpeg")]
         [Display(Name = "Image")]
-        public IFormFile InitialImage { get; set; }
+        public string InitialImage { get; set; }
 
         [Required]
         public string UserId { get; set; }
@@ -43,5 +41,10 @@ namespace grow.Models
 
         [Display(Name = "Type of Plant")]
         public PlantType PlantType { get; set; }
+
+        [Display(Name = "Original Watering Requirement")]
+        public int WaterId { get; set; }
+        public Water Water { get; set; }
+
     }
 }

@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http.Headers;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace grow.Controllers
 {
@@ -19,11 +21,13 @@ namespace grow.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public PlantsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public PlantsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHostingEnvironment appEnvironment)
         {
             _context = context;
-            _userManager = userManager; ;
+            _userManager = userManager;
+            _appEnvironment = appEnvironment;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -75,12 +79,26 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId")] Plant plant)
+        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId")] Plant plant, IFormFile file)
         {
             // Remove user and userId
             ModelState.Remove("UserId");
             ModelState.Remove("User");
             ModelState.Remove("DateCreated");
+            ModelState.Remove("WaterId");
+            ModelState.Remove("InitialImage");
+
+            // make sure file is selected
+            if (file == null || file.Length == 0) return Content("file not selected");
+
+            // get path location to store img
+            string path_Root = _appEnvironment.WebRootPath;
+
+            // get only file name without file path
+            var trimmedFileName = System.IO.Path.GetFileName(file.FileName);
+
+            // store file location
+            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
 
             if (ModelState.IsValid)
             {
@@ -89,18 +107,19 @@ namespace grow.Controllers
                 plant.User = user;
                 plant.UserId = user.Id;
 
-                var file = plant.InitialImage;
-                var parsedContentDisposition =
-                    ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-                var filename = Path.Combine(_context.WebRootPath,
-                    "Uploads", parsedContentDisposition.FileName.Trim('"'));
-                using (var stream = System.IO.File.OpenWrite(filename))
+                // copy file to target
+                using (var stream = new FileStream(path_to_Images, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
+                plant.InitialImage = path_to_Images;
+
                 _context.Add(plant);
                 await _context.SaveChangesAsync();
+
+                ViewData["FilePath"] = path_to_Images;
+
                 return RedirectToAction(nameof(Index));
             }
             return View(plant);

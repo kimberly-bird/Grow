@@ -38,10 +38,8 @@ namespace grow.Models
 
         public string Notes { get; set; }
 
-        [NotMappedAttribute]
-        [FileExtensions(Extensions = "jpg,jpeg")]
         [Display(Name = "Image")]
-        public IFormFile UpdatedImage { get; set; }
+        public string UpdatedImage { get; set; }
 
     }
 }
