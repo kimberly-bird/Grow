@@ -10,8 +10,8 @@ using grow.Data;
 namespace grow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181226150642_addPlantsToWater")]
-    partial class addPlantsToWater
+    [Migration("20181228175607_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,7 +114,7 @@ namespace grow.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<int?>("WaterId");
+                    b.Property<int>("WaterId");
 
                     b.HasKey("PlantId");
 
@@ -316,9 +316,10 @@ namespace grow.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("grow.Models.Water")
+                    b.HasOne("grow.Models.Water", "Water")
                         .WithMany("Plants")
-                        .HasForeignKey("WaterId");
+                        .HasForeignKey("WaterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("grow.Models.PlantAudit", b =>

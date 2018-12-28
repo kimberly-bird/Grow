@@ -17,6 +17,7 @@ namespace grow.Data
         public DbSet<PlantAudit> PlantAudit { get; set; }
         public DbSet<PlantType> PlantType { get; set; }
         public DbSet<Water> Water { get; set; }
+        public string WebRootPath { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

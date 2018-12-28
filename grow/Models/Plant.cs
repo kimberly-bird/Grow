@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,5 +41,10 @@ namespace grow.Models
 
         [Display(Name = "Type of Plant")]
         public PlantType PlantType { get; set; }
+
+        [Display(Name = "Original Watering Requirement")]
+        public int WaterId { get; set; }
+        public Water Water { get; set; }
+
     }
 }
