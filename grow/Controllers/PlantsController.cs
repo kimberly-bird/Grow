@@ -106,6 +106,7 @@ namespace grow.Controllers
                 var user = await GetCurrentUserAsync();
                 plant.User = user;
                 plant.UserId = user.Id;
+                plant.WaterId = 1;
 
                 // copy file to target
                 using (var stream = new FileStream(path_to_Images, FileMode.Create))
