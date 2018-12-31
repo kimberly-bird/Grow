@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+/* PLANT IMAGES */
+.plant_image {
+    max-height: 200px;
+    width: auto;
+}

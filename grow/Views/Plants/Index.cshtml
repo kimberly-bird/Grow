@@ -44,8 +44,7 @@
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InitialImage)
-                <img src="~/User_Files/Images/@item.InitialImage" />
+                <img class="plant_image" src="~/User_Files/Images/@item.InitialImage" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PlantType.Name)
