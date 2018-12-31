@@ -67,6 +67,8 @@ namespace grow.Controllers
             return View(viewmodel);
         }
 
+
+
         // GET: Plants/Create
         public IActionResult Create()
         {
@@ -98,7 +100,7 @@ namespace grow.Controllers
             var trimmedFileName = System.IO.Path.GetFileName(file.FileName);
 
             // store file location
-            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
+            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName + System.Guid.NewGuid().ToString();
 
             if (ModelState.IsValid)
             {
