@@ -9,6 +9,9 @@ using grow.Data;
 using grow.Models;
 using grow.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace grow.Controllers
 {
@@ -16,11 +19,13 @@ namespace grow.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public PlantAuditsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public PlantAuditsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHostingEnvironment appEnvironment)
         {
             _context = context;
-            _userManager = userManager; ;
+            _userManager = userManager;
+            _appEnvironment = appEnvironment;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
@@ -78,11 +83,25 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id)
+        public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id, IFormFile file)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
             ModelState.Remove("PlantAudit.PlantId");
+            ModelState.Remove("PlantAudit.UpdatedImage");
+
+            // make sure file is selected
+            if (file == null || file.Length == 0) return Content("file not selected");
+
+            // get path location to store img
+            string path_Root = _appEnvironment.WebRootPath;
+
+            // get only file name without file path
+            var trimmedFileName = System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
+
+            // store file location
+            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
+
 
             if (ModelState.IsValid)
             {
@@ -92,8 +111,19 @@ namespace grow.Controllers
                 var plant = await _context.Plant.FindAsync(id);
                 model.PlantAudit.PlantId = plant.PlantId;
 
+                // copy file to target
+                using (var stream = new FileStream(path_to_Images, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                model.PlantAudit.UpdatedImage = trimmedFileName;
+
                 _context.Add(model.PlantAudit);
                 await _context.SaveChangesAsync();
+
+                ViewData["FilePath"] = path_to_Images;
+
                 return RedirectToAction("Details", "Plants", new { @id = id});
             }
  

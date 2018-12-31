@@ -6,11 +6,11 @@
 
 <h2>Plant Requirements</h2>
 
-<h4>Now that you've entered your plant, whenever you need to make a change to the requirements to keep your damn plant alive, update your plant here.</h4>
+<h4>Now that you've entered your plant, whenever you need to make a change to the requirements to keep your plant alive, update your plant here.</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form controller="PlantAudits" method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group hidden">
                 <label asp-for="PlantAudit.PlantId" class="control-label"></label>
@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PlantAudit.UpdatedImage" class="control-label"></label>
-                <input asp-for="PlantAudit.UpdatedImage" class="form-control" />
+                <input asp-for="PlantAudit.UpdatedImage" class="form-control" type="file" name="file" />
                 <span asp-validation-for="PlantAudit.UpdatedImage" class="text-danger"></span>
             </div>
             <div class="form-group">
