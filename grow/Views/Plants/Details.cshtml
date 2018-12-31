@@ -49,6 +49,7 @@
     @foreach (PlantAudit audit in Model.PlantAudit)
     {
         <div>Date: @audit.DateCreated</div>
+        <img class="plant_image" src="~/User_Files/Images/@audit.UpdatedImage" />
         <div>Light Requirements: @audit.Light.Requirements</div>
         <div>Water Regularity: @audit.Water.Regularity</div>
         <div>Infestation Issue? @audit.InfestationIssue</div>
