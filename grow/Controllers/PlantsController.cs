@@ -97,10 +97,10 @@ namespace grow.Controllers
             string path_Root = _appEnvironment.WebRootPath;
 
             // get only file name without file path
-            var trimmedFileName = System.IO.Path.GetFileName(file.FileName);
+            var trimmedFileName =  System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
 
             // store file location
-            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName + System.Guid.NewGuid().ToString();
+            string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
 
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace grow.Controllers
                     await file.CopyToAsync(stream);
                 }
 
-                plant.InitialImage = path_to_Images;
+                plant.InitialImage = trimmedFileName;
 
                 _context.Add(plant);
                 await _context.SaveChangesAsync();
