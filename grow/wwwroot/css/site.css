@@ -42,6 +42,11 @@ body {
     width: auto;
 }
 
+.plant-card {
+    max-width: 200px;
+    height: auto;
+}
+
 /* BTN LINKS*/
 .button-link {
     color: white;
