@@ -4,61 +4,67 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Plant Details</h2>
+<h1>Plant Details</h1>
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Plant.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Plant.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plant.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Plant.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plant.Notes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Plant.Notes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plant.InitialImage)
-        </dt>
-        <dd>
-            <img class="plant_image" src="~/User_Files/Images/@Model.Plant.InitialImage" />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plant.PlantType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Plant.PlantType.Name)
-        </dd>
-    </dl>
-    <div>
-        <a asp-controller="PlantAudits" asp-action="Create" asp-route-id="@Model.Plant.PlantId">Update this plant's requirements</a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+                <div class="card plant-row">
+                    <img class="plant_image_details" src="~/User_Files/Images/@Model.Plant.InitialImage" />
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4 plant-details">
+                <div class="card plant-row">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-center">@Html.DisplayFor(model => model.Plant.Name)</h2>
+                        <h3 class="card-title text-center">@Html.DisplayNameFor(model => model.Plant.PlantType.Name): @Html.DisplayFor(model => model.Plant.PlantType.Name)</h3>
+                        <h5 class="card-text text-center">@Html.DisplayNameFor(model => model.Plant.DateCreated): @Html.DisplayFor(model => model.Plant.DateCreated)</h5>
+                        <h5 class="card-text text-center">@Html.DisplayFor(model => model.Plant.Notes)</h5>
+                        <button type="button" class="btn"><a class="button-link" asp-controller="PlantAudits" asp-action="Create" asp-route-id="@Model.Plant.PlantId">Update this plant's requirements</a></button>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small class="text-muted">
+                            <br />
+                            <a class="details-link" asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> |
+                            <a class="details-link" asp-action="Index">Back to List of Plants</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h4>Plant Requirements</h4>
+    <hr />
 
-    @foreach (PlantAudit audit in Model.PlantAudit)
-    {
-        <div>Date: @audit.DateCreated</div>
-        <img class="plant_image" src="~/User_Files/Images/@audit.UpdatedImage" />
-        <div>Light Requirements: @audit.Light.Requirements</div>
-        <div>Water Regularity: @audit.Water.Regularity</div>
-        <div>Infestation Issue? @audit.InfestationIssue</div>
-        <div>Notes: @audit.Notes</div>
-        <hr />
-    }
+    <h4>History of this plant's requirements</h4>
+    <div class="container">
+        <div class="row">
+            @foreach (PlantAudit audit in Model.PlantAudit)
+            {
+                <div class="col-sm-4">
+                    <div class="card plant-row">
+                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@audit.UpdatedImage" />
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-center">Date: @audit.DateCreated</h4>
+                            <p class="card-text text-center">Light Requirements: @audit.Light.Requirements</p>
+                            <p class="card-text text-center">Water Regularity: @audit.Water.Regularity</p>
+                            <p class="card-text text-center">Infestation Issue? @audit.InfestationIssue</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <small class="text-muted">
+                                <p>Notes: @audit.Notes</p>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Plant.PlantId">Edit Plant Details</a> | 
-    <a asp-action="Index">Back to List of Plants</a>
-</div>
+

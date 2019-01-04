@@ -47,6 +47,16 @@ body {
     height: auto;
 }
 
+.plant_image_details {
+    max-height: 400px;
+    width: auto;
+}
+
+.plant-details {
+    text-align: center;
+    margin-top: 10%;
+}
+
 /* BTN LINKS*/
 .button-link {
     color: white;
@@ -125,4 +135,22 @@ html, p, nav, a {
 
 .plant-row {
     margin-top: 15px;
+}
+
+body {
+    background-image: url(../images/background-img.png)
+}
+
+.form-styles {
+    text-align: center;
+    display: block;
+}
+
+.form-column {
+    margin-left: 25%;
+    max-width: 50%;
+}
+
+.form-background {
+    background-color: white;
 }
