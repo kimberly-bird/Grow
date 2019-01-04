@@ -2,17 +2,18 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewBag.BodyClass = "faded-background-image";
 }
 
-<h2>All Plant Types</h2>
+<h2 class="form-styles">All Plant Types</h2>
 
 <p>
-    <a asp-action="Create">Add a New Plant Type</a>
+    <button type="button" class="btn"><a class="button-link" asp-action="Create">Add New Plant Type</a></button>
 </p>
-<table class="table">
+<table class="table plant-details">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
@@ -25,9 +26,8 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PlantTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PlantTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PlantTypeId">Delete</a>
+                <a class="details-link" asp-action="Edit" asp-route-id="@item.PlantTypeId">Edit</a> |
+                <a class="details-link" asp-action="Delete" asp-route-id="@item.PlantTypeId">Delete</a>
             </td>
         </tr>
 }
