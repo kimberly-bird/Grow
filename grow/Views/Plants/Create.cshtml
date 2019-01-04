@@ -22,9 +22,11 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InitialImage" class="control-label"></label>
-                <input asp-for="InitialImage" class="form-control" type="file" name="file" />
-                <span asp-validation-for="InitialImage" class="text-danger"></span>
+                <div class="custom-file">
+                    <label asp-for="InitialImage" class="custom-file-label" for="inputGroupFile02">Upload plant image</label>
+                    <input asp-for="InitialImage" type="file" class="custom-file-input" id="inputGroupFile02" name="file" />
+                    <span asp-validation-for="InitialImage" class="input-group-text" id=""></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="PlantTypeId" class="control-label"></label>
@@ -34,7 +36,6 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
-        <label>Uploaded File= @ViewData["FilePath"]</label>
     </div>
 </div>
 

@@ -14,11 +14,11 @@
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="card">
                     <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@item.InitialImage" alt="Card image cap">
                     <div class="card-body text-center">
-                        <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <h4 class="card-title text-center">@Html.DisplayFor(modelItem => item.Name)</h4>
                         <p class="card-text text-center">@Html.DisplayFor(modelItem => item.PlantType.Name).</p>
                     </div>
                     <div class="card-footer text-center">

@@ -57,3 +57,10 @@ button.btn a:hover {
     color: aliceblue;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Karma', serif;
+}
+
+html, p {
+    font-family: 'Roboto', sans-serif;
+}
