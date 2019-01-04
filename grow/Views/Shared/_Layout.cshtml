@@ -8,14 +8,14 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link href="https://fonts.googleapis.com/css?family=Karma|Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Karma|Raleway" rel="stylesheet">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link href="https://fonts.googleapis.com/css?family=Karma|Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Karma|Raleway" rel="stylesheet">
     </environment>
 </head>
 <body>
@@ -28,13 +28,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Plants" asp-action="Index" class="navbar-brand">grow</a>
+                <a asp-area="" asp-controller="Plants" asp-action="Index" class="navbar-brand">
+                    <img src="~/images/grow.png" class="img-responsive nav-img" alt="Responsive image">
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Plants" asp-action="Index">Plants</a></li>
+                    <li><a asp-area="" asp-controller="Plants" asp-action="Index">Your Plants</a></li>
+                    <li><a>|</a></li>
                     <li><a asp-area="" asp-controller="PlantTypes" asp-action="Index">Plant Types</a></li>
+                    <li><a>|</a></li>
                     <li><a asp-area="" asp-controller="Waters" asp-action="Index">Watering</a></li>
+                    <li><a>|</a></li>
                     <li><a asp-area="" asp-controller="Lights" asp-action="Index">Lighting</a></li>
                 </ul>
                 <partial name="_LoginPartial" />

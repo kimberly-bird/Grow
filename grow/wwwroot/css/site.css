@@ -54,18 +54,75 @@ body {
 
 button.btn a:hover {
     text-decoration: none !important;
-    color: aliceblue;
+}
+
+.btn {
+    background-color: #58d68d;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Karma', serif;
 }
 
-html, p {
-    font-family: 'Roboto', sans-serif;
+html, p, nav, a {
+    font-family: 'Raleway', sans-serif;
 }
 
 .hero-image {
     max-width: 700px;
     height: auto;
+}
+
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn-get-started {
+    position: relative;
+    bottom: 7vw;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #58d68d;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    .container .btn-get-started:hover {
+        background-color: black;
+    }
+
+.navbar-inverse {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #58d68d;
+    background-color: transparent;
+}
+
+.nav-img {
+    margin-top: -20px;
+    margin-left: 15px;
+    max-height: 50px;
+    width: auto;
+}
+
+.details-link {
+    color: #58d68d;
+}
+
+.btn-logout {
+    margin-top: 8px;
+}
+
+.plant-row {
+    margin-top: 15px;
 }

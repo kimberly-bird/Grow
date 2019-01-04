@@ -8,14 +8,14 @@
 <h4>Hope they're all still alive!</h4>
 
 <p>
-    <button type="button" class="btn btn-info"><a class="button-link" asp-action="Create">Add New Plant</a></button>
+    <button type="button" class="btn"><a class="button-link" asp-action="Create">Add New Plant</a></button>
 </p>
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
         {
             <div class="col-sm-4">
-                <div class="card">
+                <div class="card plant-row">
                     <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@item.InitialImage" alt="Card image cap">
                     <div class="card-body text-center">
                         <h4 class="card-title text-center">@Html.DisplayFor(modelItem => item.Name)</h4>
@@ -23,9 +23,9 @@
                     </div>
                     <div class="card-footer text-center">
                         <small class="text-muted">
-                            <a asp-action="Edit" asp-route-id="@item.PlantId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.PlantId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.PlantId">Delete</a>
+                            <a class="details-link" asp-action="Edit" asp-route-id="@item.PlantId">Edit</a> |
+                            <a class="details-link" asp-action="Details" asp-route-id="@item.PlantId">Details</a> |
+                            <a class="details-link" asp-action="Delete" asp-route-id="@item.PlantId">Delete</a>
                         </small>
                     </div>
                 </div>
