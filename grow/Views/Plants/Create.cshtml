@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    ViewBag.BodyClass = "background-image";
 }
 
 <h2 class="form-styles">Add a New Plant</h2>
@@ -38,11 +39,6 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

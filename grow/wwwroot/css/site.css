@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Karma', serif;
 }
 
-html, p, nav, a {
+html, p, nav, a, form {
     font-family: 'Raleway', sans-serif;
 }
 
@@ -137,8 +137,17 @@ html, p, nav, a {
     margin-top: 15px;
 }
 
-body {
-    background-image: url(../images/background-img.png)
+.update-directions {
+    background-color: rgba(255, 255, 255, 0.753);
+    text-align: center;
+    font-size: 1em;
+    max-width: 50%;
+    margin-left: 25%;
+    padding: 10px;
+}
+
+.background-image {
+    background-image: url(../images/backgroundimage.png);
 }
 
 .form-styles {
@@ -152,5 +161,9 @@ body {
 }
 
 .form-background {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.753);
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-left: 175px;
+    margin-right: 175px;
 }
