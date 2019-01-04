@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewBag.BodyClass = "faded-background-image";
 }
 
-<h1>Plant Details</h1>
+<h1 class="form-styles">Plant Details</h1>
 
 <div>
     <hr />
@@ -13,13 +14,13 @@
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <div class="card plant-row">
+                <div class="card">
                     <img class="plant_image_details" src="~/User_Files/Images/@Model.Plant.InitialImage" />
                 </div>
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-4 plant-details">
-                <div class="card plant-row">
+                <div class="card">
                     <div class="card-body text-center">
                         <h2 class="card-title text-center">@Html.DisplayFor(model => model.Plant.Name)</h2>
                         <h3 class="card-title text-center">@Html.DisplayNameFor(model => model.Plant.PlantType.Name): @Html.DisplayFor(model => model.Plant.PlantType.Name)</h3>
@@ -41,7 +42,7 @@
 
     <hr />
 
-    <h4>History of this plant's requirements</h4>
+    <h4 class="form-styles">History of this plant's requirements</h4>
     <div class="container">
         <div class="row">
             @foreach (PlantAudit audit in Model.PlantAudit)
