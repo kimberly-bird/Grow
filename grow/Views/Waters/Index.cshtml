@@ -2,34 +2,33 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewBag.BodyClass = "faded-background-image";
 }
 
-<h2>Watering Regularity Options</h2>
+<h2 class="form-styles">Watering Regularity Options</h2>
 
 <p>
-    <a asp-action="Create">Create New Watering Requirement</a>
+    <button type="button" class="btn"><a class="button-link" asp-action="Create">Create New <br />Watering Requirement</a></button>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Regularity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <h3 class="text-center">
                 @Html.DisplayFor(modelItem => item.Regularity)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.WaterId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.WaterId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WaterId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </h3>
+            @foreach (PlantAudit pa in item.PlantAudits)
+            {
+                <div class="col-sm-4">
+                    <div class="card plant-row">
+                        <h4 class="text-center">@pa.Plant.Name</h4>
+                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@pa.Plant.InitialImage" alt="Card image cap">
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+    }
+</div>
+
