@@ -2,12 +2,13 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    ViewBag.BodyClass = "background-image";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="form-styles">@ViewData["Title"]</h2>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="row form-background">
+    <div class="col align-self-center form-column">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />

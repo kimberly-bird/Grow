@@ -23,7 +23,10 @@ namespace grow.Controllers
         // GET: Waters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Water.ToListAsync());
+            return View(await _context.Water
+                .Include(p => p.Plants)
+                .Include(pa => pa.PlantAudits)
+                .ToListAsync());
         }
 
         // GET: Waters/Details/5

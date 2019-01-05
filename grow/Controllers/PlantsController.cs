@@ -168,6 +168,7 @@ namespace grow.Controllers
                     // Get the current user
                     var user = await GetCurrentUserAsync();
                     plant.User = user;
+                    plant.WaterId = 1;
 
                     _context.Update(plant);
                     await _context.SaveChangesAsync();

@@ -41,3 +41,141 @@ body {
     max-height: 200px;
     width: auto;
 }
+
+.plant-card {
+    max-width: 200px;
+    height: auto;
+}
+
+.plant_image_details {
+    max-height: 400px;
+    width: auto;
+}
+
+.plant-details {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.753);
+    padding: 10px;
+}
+
+/* BTN LINKS*/
+.button-link {
+    color: white;
+}
+
+button.btn a:hover {
+    text-decoration: none !important;
+}
+
+.btn {
+    background-color: #58d68d;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Karma', serif;
+}
+
+html, p, nav, a, form {
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero-image {
+    max-width: 700px;
+    height: auto;
+}
+
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn-get-started {
+    position: relative;
+    bottom: 7vw;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #58d68d;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    .container .btn-get-started:hover {
+        background-color: black;
+    }
+
+.navbar-inverse {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #58d68d;
+    background-color: transparent;
+}
+
+.nav-img {
+    margin-top: -20px;
+    margin-left: 15px;
+    max-height: 50px;
+    width: auto;
+}
+
+.details-link {
+    color: #58d68d;
+}
+
+.btn-logout {
+    margin-top: 8px;
+}
+
+.plant-row {
+    margin-top: 15px;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.update-directions {
+    background-color: rgba(255, 255, 255, 0.753);
+    text-align: center;
+    font-size: 1em;
+    max-width: 50%;
+    margin-left: 25%;
+    padding: 10px;
+}
+
+.background-image {
+    background-image: url(../images/backgroundimage.png);
+}
+
+.faded-background-image {
+    background-image: url(../images/background-img.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+.form-styles {
+    text-align: center;
+    display: block;
+}
+
+.form-column {
+    margin-left: 25%;
+    max-width: 50%;
+}
+
+.form-background {
+    background-color: rgba(255, 255, 255, 0.753);
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-left: 175px;
+    margin-right: 175px;
+}
