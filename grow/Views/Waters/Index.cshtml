@@ -11,31 +11,27 @@
     <button type="button" class="btn"><a class="button-link" asp-action="Create">Create New <br />Watering Requirement</a></button>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                water
-            </th>
-            <th>
-                plant
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Water.Regularity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                    @Html.DisplayFor(modelItem => item.InitialImage)
-                </td>
-
-            </tr>
+            <div class="col-sm-4">
+                <div class="card plant-row text-center">
+                    <h3>@Html.DisplayFor(modelItem => item.Water.Regularity)</h3>
+                    <hr />
+                    <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@item.InitialImage" alt="Card image cap">
+                    <hr />
+                    <div class="card-body text-center">
+                        <p>@Html.DisplayFor(modelItem => item.Name)</p>
+                    </div>
+                    <div class="card-footer text-center">
+                    <small class="text-muted">
+                    <a class="details-link" asp-action="Create" asp-controller="PlantAudits" asp-route-id="@item.PlantId">Edit Plant's Watering Needs</a>
+                    </small>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+

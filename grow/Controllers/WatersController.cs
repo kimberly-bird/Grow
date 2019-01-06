@@ -24,6 +24,7 @@ namespace grow.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Plant
+                .OrderBy(r => r.Water.WaterId)
                 .Include(w => w.Water)
                 .ToListAsync());
         }
