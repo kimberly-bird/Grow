@@ -9,53 +9,60 @@
 
 <p class="update-directions">Now that you've entered your plant, whenever you need to make a change to the requirements to keep your plant alive, update your plant here.</p>
 <hr />
-<div class="row form-background">
-    <div class="col align-self-center form-column">
-        <form controller="PlantAudits" method="post" asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group hidden">
-                <label asp-for="PlantAudit.PlantId" class="control-label"></label>
-                <input asp-for="PlantAudit.PlantId" class="form-control" />
-                <span asp-validation-for="PlantAudit.PlantId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlantAudit.Water" class="control-label"></label>
-                <select asp-for="PlantAudit.WaterId" class="form-control" asp-items="@Model.WaterList"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlantAudit.Light" class="control-label"></label>
-                <select asp-for="PlantAudit.LightId" class="form-control" asp-items="@Model.LightList"></select>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="PlantAudit.RequirementsChanged" /> @Html.DisplayNameFor(model => model.PlantAudit.RequirementsChanged)
-                    </label>
+
+<div class="container">
+    <div class="row form-background">
+        <div class="col-sm-6">
+            <form controller="PlantAudits" method="post" asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group hidden">
+                    <label asp-for="PlantAudit.PlantId" class="control-label"></label>
+                    <input asp-for="PlantAudit.PlantId" class="form-control" />
+                    <span asp-validation-for="PlantAudit.PlantId" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="PlantAudit.InfestationIssue" /> @Html.DisplayNameFor(model => model.PlantAudit.InfestationIssue)
-                    </label>
+                <div class="form-group">
+                    <label asp-for="PlantAudit.Water" class="control-label"></label>
+                    <select asp-for="PlantAudit.WaterId" class="form-control" asp-items="@Model.WaterList"></select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlantAudit.Notes" class="control-label"></label>
-                <input asp-for="PlantAudit.Notes" class="form-control" />
-                <span asp-validation-for="PlantAudit.Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="custom-file">
-                    <label asp-for="PlantAudit.UpdatedImage" class="custom-file-label" for="inputGroupFile02">Upload plant image</label>
-                    <input asp-for="PlantAudit.UpdatedImage" type="file" class="custom-file-input" id="inputGroupFile02" name="file" />
-                    <span asp-validation-for="PlantAudit.UpdatedImage" class="input-group-text" id=""></span>
+                <div class="form-group">
+                    <label asp-for="PlantAudit.Light" class="control-label"></label>
+                    <select asp-for="PlantAudit.LightId" class="form-control" asp-items="@Model.LightList"></select>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn button-link" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="PlantAudit.RequirementsChanged" /> @Html.DisplayNameFor(model => model.PlantAudit.RequirementsChanged)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="PlantAudit.InfestationIssue" /> @Html.DisplayNameFor(model => model.PlantAudit.InfestationIssue)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PlantAudit.Notes" class="control-label"></label>
+                    <input asp-for="PlantAudit.Notes" class="form-control" />
+                    <span asp-validation-for="PlantAudit.Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <label asp-for="PlantAudit.UpdatedImage" class="custom-file-label" for="inputGroupFile02">Upload plant image</label>
+                        <input asp-for="PlantAudit.UpdatedImage" type="file" class="custom-file-input" id="inputGroupFile02" name="file" />
+                        <span asp-validation-for="PlantAudit.UpdatedImage" class="input-group-text" id=""></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn button-link" />
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@Model.Plant.InitialImage" alt="Card image cap">
+            <h3 class="text-center">@Model.Plant.Name</h3>
+        </div>
     </div>
 </div>
 
