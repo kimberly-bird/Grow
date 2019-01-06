@@ -1,4 +1,4 @@
-﻿@model IEnumerable<grow.Models.Water>
+﻿@model IEnumerable<grow.Models.ViewModels.IndexWaterViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,14 +16,14 @@
     {
         <div class="row">
             <h3 class="text-center">
-                @Html.DisplayFor(modelItem => item.Regularity)
+                @Html.DisplayNameFor(modelItem => item.filteredWater.Current.Key.WaterId)
             </h3>
-            @foreach (PlantAudit pa in item.PlantAudits)
+            @foreach (var p in item.filteredWater.Current.Key.PlantAudits)
             {
                 <div class="col-sm-4">
                     <div class="card plant-row">
-                        <h4 class="text-center">@pa.Plant.Name</h4>
-                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@pa.Plant.InitialImage" alt="Card image cap">
+                        <h4 class="text-center">@p.Plant.Name</h4>
+                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@p.Plant.InitialImage" alt="Card image cap">
                     </div>
                     <br />
                 </div>
@@ -31,4 +31,7 @@
         </div>
     }
 </div>
+
+
+
 
