@@ -108,8 +108,16 @@ namespace grow.Controllers
                 // Get the current user
                 var user = await GetCurrentUserAsync();
 
+                // get current plant by id
                 var plant = await _context.Plant.FindAsync(id);
+
+                // match plant audit with current plant
                 model.PlantAudit.PlantId = plant.PlantId;
+
+                // assign plant water id to selected water id
+                plant.WaterId = model.PlantAudit.WaterId;
+
+                model.Plant = plant;
 
                 // copy file to target
                 using (var stream = new FileStream(path_to_Images, FileMode.Create))

@@ -23,9 +23,9 @@ namespace grow.Controllers
         // GET: Waters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Water
-                .Include(p => p.Plants)
-                .Include(pa => pa.PlantAudits)
+            return View(await _context.Plant
+                .OrderBy(r => r.Water.WaterId)
+                .Include(w => w.Water)
                 .ToListAsync());
         }
 

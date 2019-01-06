@@ -1,4 +1,4 @@
-﻿@model IEnumerable<grow.Models.Water>
+﻿@model IEnumerable<grow.Models.Plant>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,23 +12,26 @@
 </p>
 
 <div class="container">
-    @foreach (var item in Model)
-    {
-        <div class="row">
-            <h3 class="text-center">
-                @Html.DisplayFor(modelItem => item.Regularity)
-            </h3>
-            @foreach (PlantAudit pa in item.PlantAudits)
-            {
-                <div class="col-sm-4">
-                    <div class="card plant-row">
-                        <h4 class="text-center">@pa.Plant.Name</h4>
-                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@pa.Plant.InitialImage" alt="Card image cap">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="card plant-row text-center">
+                    <h3>@Html.DisplayFor(modelItem => item.Water.Regularity)</h3>
+                    <hr />
+                    <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@item.InitialImage" alt="Card image cap">
+                    <hr />
+                    <div class="card-body text-center">
+                        <p>@Html.DisplayFor(modelItem => item.Name)</p>
                     </div>
-                    <br />
+                    <div class="card-footer text-center">
+                    <small class="text-muted">
+                    <a class="details-link" asp-action="Create" asp-controller="PlantAudits" asp-route-id="@item.PlantId">Edit Plant's Watering Needs</a>
+                    </small>
+                    </div>
                 </div>
-            }
-        </div>
-    }
+            </div>
+        }
+    </div>
 </div>
 
