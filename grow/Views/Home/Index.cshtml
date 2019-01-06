@@ -1,9 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewBag.BodyClass = "background-image";
+
 }
 
 <div class="container">
-    <img src="~/images/WelcometoGrow.png" class="img-responsive" alt="Responsive image">
+    <div class="text-center hero-image-text">
+        <h1 class="hero-text">Welcome to</h1>
+        <img class="img-responsive center-block" src="~/images/grow.png" />
+        <hr />
+        <p class="hero-sub-text">A place to track your plants' health</p>
+    </div>
     <img src="~/images/HowItWorks.png" class="img-responsive" alt="Responsive image">
     <button class="btn-get-started btn"><a  class="button-link" asp-area="Identity" asp-page="/Account/Register">Get Started</a></button>
 </div>
