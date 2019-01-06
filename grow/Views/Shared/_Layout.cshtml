@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -33,13 +39,16 @@
                 </a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Plants" asp-action="Index">Your Plants</a></li>
-                    <li><a>|</a></li>
-                    <li><a asp-area="" asp-controller="PlantTypes" asp-action="Index">Plant Types</a></li>
-                    <li><a>|</a></li>
-                    <li><a asp-area="" asp-controller="Waters" asp-action="Index">Watering</a></li>
-                </ul>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Plants" asp-action="Index">Your Plants</a></li>
+                        <li><a>|</a></li>
+                        <li><a asp-area="" asp-controller="PlantTypes" asp-action="Index">Plant Types</a></li>
+                        <li><a>|</a></li>
+                        <li><a asp-area="" asp-controller="Waters" asp-action="Index">Watering</a></li>
+                    </ul>
+                }
                 <partial name="_LoginPartial" />
             </div>
         </div>

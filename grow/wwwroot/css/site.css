@@ -152,6 +152,10 @@ html, p, nav, a, form {
 
 .background-image {
     background-image: url(../images/backgroundimage.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 
 .faded-background-image {
@@ -161,6 +165,21 @@ html, p, nav, a, form {
     background-position: center;
     background-size: cover;
 }
+
+.hero-image-text {
+    background-color: rgba(255, 255, 255, 0.753);
+    padding: 50px;
+    margin: 50px;
+}
+
+.hero-text {
+    font-size: 5em;
+}
+
+.hero-sub-text {
+    font-size: 1.5em;
+}
+
 
 .form-styles {
     text-align: center;
