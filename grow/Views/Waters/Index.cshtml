@@ -1,4 +1,4 @@
-﻿@model IEnumerable<grow.Models.ViewModels.IndexWaterViewModel>
+﻿@model IEnumerable<grow.Models.Plant>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,27 +11,31 @@
     <button type="button" class="btn"><a class="button-link" asp-action="Create">Create New <br />Watering Requirement</a></button>
 </p>
 
-<div class="container">
-    @foreach (var item in Model)
-    {
-        <div class="row">
-            <h3 class="text-center">
-                @Html.DisplayNameFor(modelItem => item.filteredWater.Current.Key.WaterId)
-            </h3>
-            @foreach (var p in item.filteredWater.Current.Key.PlantAudits)
-            {
-                <div class="col-sm-4">
-                    <div class="card plant-row">
-                        <h4 class="text-center">@p.Plant.Name</h4>
-                        <img class="card-img-top plant_image center-block" src="~/User_Files/Images/@p.Plant.InitialImage" alt="Card image cap">
-                    </div>
-                    <br />
-                </div>
-            }
-        </div>
-    }
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                water
+            </th>
+            <th>
+                plant
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Water.Regularity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.InitialImage)
+                </td>
 
-
-
-
+            </tr>
+        }
+    </tbody>
+</table>

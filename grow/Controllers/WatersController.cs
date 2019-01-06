@@ -23,9 +23,9 @@ namespace grow.Controllers
         // GET: Waters
         public async Task<IActionResult> Index()
         {
-            IndexWaterViewModel viewModel = new IndexWaterViewModel(_context);
-
-            return View(viewModel);
+            return View(await _context.Plant
+                .Include(w => w.Water)
+                .ToListAsync());
         }
 
         // GET: Waters/Details/5
