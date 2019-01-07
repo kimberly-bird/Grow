@@ -72,6 +72,7 @@ namespace grow.Controllers
         // GET: Plants/Create
         public IActionResult Create()
         {
+            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name");
             return View();
         }
@@ -97,7 +98,7 @@ namespace grow.Controllers
             string path_Root = _appEnvironment.WebRootPath;
 
             // get only file name without file path
-            var trimmedFileName =  System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
+            var trimmedFileName = System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
 
             // store file location
             string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
@@ -108,7 +109,6 @@ namespace grow.Controllers
                 var user = await GetCurrentUserAsync();
                 plant.User = user;
                 plant.UserId = user.Id;
-                plant.WaterId = 1;
 
                 // copy file to target
                 using (var stream = new FileStream(path_to_Images, FileMode.Create))

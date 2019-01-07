@@ -23,7 +23,8 @@
                         <h2 class="card-title text-center">@Html.DisplayFor(model => model.Plant.Name)</h2>
                         <h3 class="card-title text-center">@Html.DisplayNameFor(model => model.Plant.PlantType.Name): @Html.DisplayFor(model => model.Plant.PlantType.Name)</h3>
                         <h5 class="card-text text-center">@Html.DisplayNameFor(model => model.Plant.DateCreated): @Html.DisplayFor(model => model.Plant.DateCreated)</h5>
-                        <h5 class="card-text text-center">@Html.DisplayFor(model => model.Plant.Notes)</h5>
+                        <p class="card-text text-center">@Html.DisplayNameFor(model => model.Plant.Water.Regularity): @Html.DisplayFor(model => model.Plant.Water.Regularity)</p>
+                        <p class="card-text text-center">@Html.DisplayFor(model => model.Plant.Notes)</p>
                         <button type="button" class="btn"><a class="button-link" asp-controller="PlantAudits" asp-action="Create" asp-route-id="@Model.Plant.PlantId">Update this plant's requirements</a></button>
                     </div>
                     <div class="card-footer text-center">
