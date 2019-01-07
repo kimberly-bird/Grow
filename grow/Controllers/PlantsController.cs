@@ -173,7 +173,7 @@ namespace grow.Controllers
         // POST: Plants/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId")] Plant plant)
+        public async Task<IActionResult> Edit(int id, [Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId,LightId")] Plant plant)
         {
             if (id != plant.PlantId)
             {
@@ -182,6 +182,8 @@ namespace grow.Controllers
 
             ModelState.Remove("UserId");
             ModelState.Remove("User");
+            ModelState.Remove("WaterId");
+            ModelState.Remove("LightId");
 
             if (ModelState.IsValid)
             {
@@ -189,9 +191,18 @@ namespace grow.Controllers
                 {
                     // Get the current user
                     var user = await GetCurrentUserAsync();
-                    plant.User = user;
 
-                    _context.Update(plant);
+                    // get current plant by id
+                    var currentPlant = await _context.Plant.FindAsync(id);
+
+                    // update according to filled out fields
+                    // NOTE: user cannot update plant's water or light requirements on this edit - that must be done from the plant audit
+                    currentPlant.User = user;
+                    currentPlant.Name = plant.Name;
+                    currentPlant.Notes = plant.Notes;
+                    currentPlant.PlantTypeId = plant.PlantTypeId;
+             
+                    _context.Update(currentPlant);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
