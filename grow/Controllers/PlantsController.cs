@@ -249,8 +249,25 @@ namespace grow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var plant = await _context.Plant.FindAsync(id);
+            // get selected plant
+            var plant = await _context.Plant
+                .FindAsync(id);
+
+            // get all plant audits that have selected plant as a foreign key
+            var plantAudits = await _context.PlantAudit
+                .Include(p => p.Plant)
+                .Where(pa => pa.PlantId == plant.PlantId)
+                .ToListAsync();
+
+            // delete all plant audit entries for selected plant
+            foreach (var pa in plantAudits)
+            {
+                _context.PlantAudit.Remove(pa);
+            }
+
+            // delete plant
             _context.Plant.Remove(plant);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
