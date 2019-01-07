@@ -10,8 +10,8 @@ using grow.Data;
 namespace grow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181228175607_Initial")]
-    partial class Initial
+    [Migration("20190107155153_lightAddedToPlant")]
+    partial class lightAddedToPlant
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,8 @@ namespace grow.Migrations
 
                     b.Property<string>("InitialImage");
 
+                    b.Property<int>("LightId");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -117,6 +119,8 @@ namespace grow.Migrations
                     b.Property<int>("WaterId");
 
                     b.HasKey("PlantId");
+
+                    b.HasIndex("LightId");
 
                     b.HasIndex("PlantTypeId");
 
@@ -306,6 +310,11 @@ namespace grow.Migrations
 
             modelBuilder.Entity("grow.Models.Plant", b =>
                 {
+                    b.HasOne("grow.Models.Light", "Light")
+                        .WithMany()
+                        .HasForeignKey("LightId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("grow.Models.PlantType", "PlantType")
                         .WithMany("Plants")
                         .HasForeignKey("PlantTypeId")

@@ -102,6 +102,8 @@ namespace grow.Migrations
 
                     b.Property<string>("InitialImage");
 
+                    b.Property<int>("LightId");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -115,6 +117,8 @@ namespace grow.Migrations
                     b.Property<int>("WaterId");
 
                     b.HasKey("PlantId");
+
+                    b.HasIndex("LightId");
 
                     b.HasIndex("PlantTypeId");
 
@@ -304,6 +308,11 @@ namespace grow.Migrations
 
             modelBuilder.Entity("grow.Models.Plant", b =>
                 {
+                    b.HasOne("grow.Models.Light", "Light")
+                        .WithMany()
+                        .HasForeignKey("LightId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("grow.Models.PlantType", "PlantType")
                         .WithMany("Plants")
                         .HasForeignKey("PlantTypeId")

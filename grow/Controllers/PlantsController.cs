@@ -52,6 +52,8 @@ namespace grow.Controllers
             DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
             var plant = await _context.Plant
                 .Include(p => p.PlantType)
+                .Include(l => l.Light)
+                .Include(w => w.Water)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
 
@@ -72,8 +74,9 @@ namespace grow.Controllers
         // GET: Plants/Create
         public IActionResult Create()
         {
-            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
+            ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements");
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name");
+            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
             return View();
         }
 
@@ -82,13 +85,12 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId")] Plant plant, IFormFile file)
+        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId,LightId")] Plant plant, IFormFile file)
         {
             // Remove user and userId
             ModelState.Remove("UserId");
             ModelState.Remove("User");
             ModelState.Remove("DateCreated");
-            ModelState.Remove("WaterId");
             ModelState.Remove("InitialImage");
 
             // make sure file is selected

@@ -36,15 +36,21 @@ namespace grow.Models
         public ApplicationUser User { get; set; }
 
         [Required]
+        [Display(Name = "Light Requirement")]
+        public int LightId { get; set; }
+
+        [Required]
         [Display(Name = "Type of Plant")]
         public int PlantTypeId { get; set; }
 
-        [Display(Name = "Type of Plant")]
-        public PlantType PlantType { get; set; }
-
-        [Display(Name = "Original Watering Requirement")]
+        [Required]
+        [Display(Name = "Watering Requirement")]
         public int WaterId { get; set; }
-        public Water Water { get; set; }
+
+
+        public virtual Light Light { get; set; }
+        public virtual PlantType PlantType { get; set; }
+        public virtual Water Water { get; set; }
 
     }
 }
