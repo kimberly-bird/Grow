@@ -117,6 +117,9 @@ namespace grow.Controllers
                 // assign plant water id to selected water id
                 plant.WaterId = model.PlantAudit.WaterId;
 
+                // assign plant light id to selected light id
+                plant.LightId = model.PlantAudit.LightId;
+
                 model.Plant = plant;
 
                 // copy file to target

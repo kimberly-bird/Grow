@@ -52,6 +52,8 @@ namespace grow.Controllers
             DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
             var plant = await _context.Plant
                 .Include(p => p.PlantType)
+                .Include(l => l.Light)
+                .Include(w => w.Water)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
 
@@ -72,7 +74,9 @@ namespace grow.Controllers
         // GET: Plants/Create
         public IActionResult Create()
         {
+            ViewData["LightId"] = new SelectList(_context.Light, "LightId", "Requirements");
             ViewData["PlantTypeId"] = new SelectList(_context.PlantType, "PlantTypeId", "Name");
+            ViewData["WaterId"] = new SelectList(_context.Water, "WaterId", "Regularity");
             return View();
         }
 
@@ -81,13 +85,12 @@ namespace grow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId")] Plant plant, IFormFile file)
+        public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId,LightId")] Plant plant, IFormFile file)
         {
             // Remove user and userId
             ModelState.Remove("UserId");
             ModelState.Remove("User");
             ModelState.Remove("DateCreated");
-            ModelState.Remove("WaterId");
             ModelState.Remove("InitialImage");
 
             // make sure file is selected
@@ -97,7 +100,7 @@ namespace grow.Controllers
             string path_Root = _appEnvironment.WebRootPath;
 
             // get only file name without file path
-            var trimmedFileName =  System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
+            var trimmedFileName = System.Guid.NewGuid().ToString() + System.IO.Path.GetFileName(file.FileName);
 
             // store file location
             string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
@@ -108,7 +111,6 @@ namespace grow.Controllers
                 var user = await GetCurrentUserAsync();
                 plant.User = user;
                 plant.UserId = user.Id;
-                plant.WaterId = 1;
 
                 // copy file to target
                 using (var stream = new FileStream(path_to_Images, FileMode.Create))

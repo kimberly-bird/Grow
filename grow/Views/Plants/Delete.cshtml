@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    ViewBag.BodyClass = "faded-background-image";
 }
 
 <h2>Delete Plant</h2>
@@ -32,7 +33,7 @@
             @Html.DisplayNameFor(model => model.InitialImage)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.InitialImage)
+            <img class="card-img-top plant_image" src="~/User_Files/Images/@Model.InitialImage" alt="Card image cap">
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PlantType)

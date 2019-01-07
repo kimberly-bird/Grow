@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace grow.Migrations
 {
-    public partial class Initial : Migration
+    public partial class lightAddedToPlant : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -205,12 +205,19 @@ namespace grow.Migrations
                     Notes = table.Column<string>(nullable: true),
                     InitialImage = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
+                    LightId = table.Column<int>(nullable: false),
                     PlantTypeId = table.Column<int>(nullable: false),
                     WaterId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plant", x => x.PlantId);
+                    table.ForeignKey(
+                        name: "FK_Plant_Light_LightId",
+                        column: x => x.LightId,
+                        principalTable: "Light",
+                        principalColumn: "LightId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Plant_PlantType_PlantTypeId",
                         column: x => x.PlantTypeId,
@@ -260,13 +267,13 @@ namespace grow.Migrations
                         column: x => x.PlantId,
                         principalTable: "Plant",
                         principalColumn: "PlantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PlantAudit_Water_WaterId",
                         column: x => x.WaterId,
                         principalTable: "Water",
                         principalColumn: "WaterId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -307,6 +314,11 @@ namespace grow.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plant_LightId",
+                table: "Plant",
+                column: "LightId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plant_PlantTypeId",
@@ -363,10 +375,10 @@ namespace grow.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Light");
+                name: "Plant");
 
             migrationBuilder.DropTable(
-                name: "Plant");
+                name: "Light");
 
             migrationBuilder.DropTable(
                 name: "PlantType");
