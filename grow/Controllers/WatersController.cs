@@ -8,24 +8,41 @@ using Microsoft.EntityFrameworkCore;
 using grow.Data;
 using grow.Models;
 using grow.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace grow.Controllers
 {
+
+    /*
+        Water class.
+        Contains all methods for water
+    */
+
     public class WatersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public WatersController(ApplicationDbContext context)
+        public WatersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        // method to get current logged in user
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Waters
         public async Task<IActionResult> Index()
         {
+            // get current user
+            var user = await GetCurrentUserAsync();
+
+            // get plants and order by the water id
             return View(await _context.Plant
                 .OrderBy(r => r.Water.WaterId)
                 .Include(w => w.Water)
+                .Where(u => u.User == user)
                 .ToListAsync());
         }
 
@@ -57,8 +74,6 @@ namespace grow.Controllers
         }
 
         // POST: Waters/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WaterId,Regularity")] Water water)
@@ -89,8 +104,6 @@ namespace grow.Controllers
         }
 
         // POST: Waters/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("WaterId,Regularity")] Water water)
