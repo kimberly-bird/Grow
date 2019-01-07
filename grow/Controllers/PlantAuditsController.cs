@@ -15,6 +15,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace grow.Controllers
 {
+
+    /*
+        Plant Audit class.
+        Contains all methods for plant audit (updates)
+
+        Summary: As users need to update their plants' needs, users can create an update to their plant (plant audit). 
+    */
+
     public class PlantAuditsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -88,6 +96,10 @@ namespace grow.Controllers
 
 
         // POST: PlantAudits/Create
+        /* SUMMARY: This POST method impacts 2 tables in the db: 
+             1. POST creates a PlantAudit entry in the db
+             2. Updates the selected plant's water and light requirements in the db
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id, IFormFile file)
