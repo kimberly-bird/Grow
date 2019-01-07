@@ -15,6 +15,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace grow.Controllers
 {
+
+    /*
+        Plant Audit class.
+        Contains all methods for plant audit (updates)
+
+        Summary: As users need to update their plants' needs, users can create an update to their plant (plant audit). 
+    */
+
     public class PlantAuditsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,15 +36,21 @@ namespace grow.Controllers
             _appEnvironment = appEnvironment;
         }
 
+
+        // get current logged in user
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
 
         // GET: PlantAudits
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PlantAudit.Include(p => p.Light).Include(p => p.Plant).Include(p => p.Water);
+            var applicationDbContext = _context.PlantAudit
+                .Include(p => p.Light)
+                .Include(p => p.Plant)
+                .Include(p => p.Water);
+
             return View(await applicationDbContext.ToListAsync());
         }
-
 
 
         // GET: PlantAudits/Details/5
@@ -52,6 +66,7 @@ namespace grow.Controllers
                 .Include(p => p.Plant)
                 .Include(p => p.Water)
                 .FirstOrDefaultAsync(m => m.PlantAuditId == id);
+
             if (plantAudit == null)
             {
                 return NotFound();
@@ -59,6 +74,7 @@ namespace grow.Controllers
 
             return View(plantAudit);
         }
+
 
         // GET: PlantAudits/Create/4
         public async Task<IActionResult> Create(int? id)
@@ -78,9 +94,12 @@ namespace grow.Controllers
             return View(viewModel);
         }
 
+
         // POST: PlantAudits/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /* SUMMARY: This POST method impacts 2 tables in the db: 
+             1. POST creates a PlantAudit entry in the db
+             2. Updates the selected plant's water and light requirements in the db
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePlantAuditViewModel model, int id, IFormFile file)
@@ -90,6 +109,7 @@ namespace grow.Controllers
             ModelState.Remove("PlantAudit.PlantId");
             ModelState.Remove("PlantAudit.UpdatedImage");
 
+            // FILE UPLOAD
             // make sure file is selected
             if (file == null || file.Length == 0) return Content("file not selected");
 
@@ -101,7 +121,6 @@ namespace grow.Controllers
 
             // store file location
             string path_to_Images = path_Root + "\\User_Files\\Images\\" + trimmedFileName;
-
 
             if (ModelState.IsValid)
             {
@@ -141,6 +160,7 @@ namespace grow.Controllers
             return View(model);
         }
 
+
         // GET: PlantAudits/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -160,9 +180,8 @@ namespace grow.Controllers
             return View(plantAudit);
         }
 
+
         // POST: PlantAudits/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PlantAuditId,DateCreated,PlantId,WaterId,LightId,RequirementsChanged,InfestationIssue,Notes,UpdatedImage")] PlantAudit plantAudit)
@@ -198,6 +217,7 @@ namespace grow.Controllers
             return View(plantAudit);
         }
 
+
         // GET: PlantAudits/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -218,6 +238,7 @@ namespace grow.Controllers
 
             return View(plantAudit);
         }
+
 
         // POST: PlantAudits/Delete/5
         [HttpPost, ActionName("Delete")]

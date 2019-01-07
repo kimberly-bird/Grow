@@ -10,6 +10,11 @@ using grow.Models;
 
 namespace grow.Controllers
 {
+    /*
+        Plant type class.
+        Contains all methods for plant types
+    */
+
     public class PlantTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -50,14 +55,10 @@ namespace grow.Controllers
         }
 
         // POST: PlantTypes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PlantTypeId,DateCreated,Name")] PlantType plantType)
         {
-                //DateTime dateCreated = DateTime.Now;
-                //plantType.DateCreated = dateCreated;
             if (ModelState.IsValid)
             {
                 _context.Add(plantType);
@@ -84,8 +85,6 @@ namespace grow.Controllers
         }
 
         // POST: PlantTypes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PlantTypeId,DateCreated,Name")] PlantType plantType)

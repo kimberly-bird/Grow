@@ -17,6 +17,12 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace grow.Controllers
 {
+    /*
+        Plant class.
+        Contains all methods for plant
+
+    */
+
     public class PlantsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,14 +36,22 @@ namespace grow.Controllers
             _appEnvironment = appEnvironment;
         }
 
+        // method to get current logged in user
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
 
         // GET: Plants
         public async Task<IActionResult> Index()
         {
+            // get current user
             var user = await GetCurrentUserAsync();
 
-            var applicationDbContext = _context.Plant.Include(p => p.PlantType).Include(p => p.User).Where(u => u.User == user);
+            // get user's plants
+            var applicationDbContext = _context.Plant
+                .Include(p => p.PlantType)
+                .Include(p => p.User)
+                .Where(u => u.User == user);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -50,6 +64,8 @@ namespace grow.Controllers
             }
 
             DetailsPlantViewModel viewmodel = new DetailsPlantViewModel(_context);
+
+            // get selected plant
             var plant = await _context.Plant
                 .Include(p => p.PlantType)
                 .Include(l => l.Light)
@@ -57,10 +73,15 @@ namespace grow.Controllers
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PlantId == id);
 
-            var plantAudit = _context.PlantAudit.Where(pa => pa.PlantId == id).OrderByDescending(o => o.DateCreated).ToList();
+            // get plant audits for selected plant
+            var plantAudit = _context.PlantAudit
+                .Where(pa => pa.PlantId == id)
+                .OrderByDescending(o => o.DateCreated)
+                .ToList();
 
             viewmodel.Plant = plant;
             viewmodel.PlantAudit = plantAudit;
+
             if (plant == null)
             {
                 return NotFound();
@@ -68,7 +89,6 @@ namespace grow.Controllers
 
             return View(viewmodel);
         }
-
 
 
         // GET: Plants/Create
@@ -80,9 +100,8 @@ namespace grow.Controllers
             return View();
         }
 
+
         // POST: Plants/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId,LightId")] Plant plant, IFormFile file)
@@ -93,6 +112,7 @@ namespace grow.Controllers
             ModelState.Remove("DateCreated");
             ModelState.Remove("InitialImage");
 
+            // IMAGE UPLOAD
             // make sure file is selected
             if (file == null || file.Length == 0) return Content("file not selected");
 
@@ -130,6 +150,7 @@ namespace grow.Controllers
             return View(plant);
         }
 
+
         // GET: Plants/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -148,12 +169,11 @@ namespace grow.Controllers
             return View(plant);
         }
 
+
         // POST: Plants/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId")] Plant plant)
+        public async Task<IActionResult> Edit(int id, [Bind("PlantId,DateCreated,Name,Notes,InitialImage,UserId,PlantTypeId,WaterId,LightId")] Plant plant)
         {
             if (id != plant.PlantId)
             {
@@ -162,6 +182,8 @@ namespace grow.Controllers
 
             ModelState.Remove("UserId");
             ModelState.Remove("User");
+            ModelState.Remove("WaterId");
+            ModelState.Remove("LightId");
 
             if (ModelState.IsValid)
             {
@@ -169,10 +191,18 @@ namespace grow.Controllers
                 {
                     // Get the current user
                     var user = await GetCurrentUserAsync();
-                    plant.User = user;
-                    plant.WaterId = 1;
 
-                    _context.Update(plant);
+                    // get current plant by id
+                    var currentPlant = await _context.Plant.FindAsync(id);
+
+                    // update according to filled out fields
+                    // NOTE: user cannot update plant's water or light requirements on this edit - that must be done from the plant audit
+                    currentPlant.User = user;
+                    currentPlant.Name = plant.Name;
+                    currentPlant.Notes = plant.Notes;
+                    currentPlant.PlantTypeId = plant.PlantTypeId;
+             
+                    _context.Update(currentPlant);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -192,6 +222,7 @@ namespace grow.Controllers
 
             return View(plant);
         }
+
 
         // GET: Plants/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -218,8 +249,25 @@ namespace grow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var plant = await _context.Plant.FindAsync(id);
+            // get selected plant
+            var plant = await _context.Plant
+                .FindAsync(id);
+
+            // get all plant audits that have selected plant as a foreign key
+            var plantAudits = await _context.PlantAudit
+                .Include(p => p.Plant)
+                .Where(pa => pa.PlantId == plant.PlantId)
+                .ToListAsync();
+
+            // delete all plant audit entries for selected plant
+            foreach (var pa in plantAudits)
+            {
+                _context.PlantAudit.Remove(pa);
+            }
+
+            // delete plant
             _context.Plant.Remove(plant);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

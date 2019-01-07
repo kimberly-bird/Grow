@@ -10,6 +10,11 @@ using grow.Models;
 
 namespace grow.Controllers
 {
+    /*
+        Water class.
+        Contains all methods for water
+    */
+
     public class LightsController : Controller
     {
         private readonly ApplicationDbContext _context;
