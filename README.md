@@ -7,7 +7,7 @@ Grow is my attempt to build an app that will help me track my houseplants. My hu
 Grow implements the Identity framework, and extends the base User object with the `ApplicationUser` model.
 
 ### Grow ERD
-![ERD](GrowERD.png)
+![ERD](grow/wwwroot/images/GrowERD.png)
 
 ## Grow Functionality
 
