@@ -5,10 +5,36 @@
 Grow is my attempt to build an app that will help me track my houseplants. My husband got me a houseplant monthly subscription and it's been challenging to keep the plants alive and thriving! The goal with this app is to enter each of your plants, along with periodic updates to optimize the watering, lighting, and other needs of each plant.
 
 Grow implements the Identity framework, and extends the base User object with the `ApplicationUser` model.
-It shows how to remove a model's property from the automatic model binding in a controller method by using `ModelState.Remove()`.
-Make sure you look in the `DbInitializer` class to see the product types that are seeded for you.
 
-This app uses CloudinaryDotNet to upload images and stores the URL in the Grow Database. Visit their repo here to learn more about Cloudinary: https://github.com/cloudinary/CloudinaryDotNet
+### Grow ERD
+![ERD](GrowERD.png)
+
+## Grow Functionality
+
+<details><summary>App Screenshots</summary>
+<p>
+
+![homepage](grow/wwwroot/images/screenshots/1.png)
+![homepage](grow/wwwroot/images/screenshots/2.png)
+![homepage](grow/wwwroot/images/screenshots/3.png)
+![homepage](grow/wwwroot/images/screenshots/4.png)
+![homepage](grow/wwwroot/images/screenshots/5.png)
+![homepage](grow/wwwroot/images/screenshots/6.png)
+![homepage](grow/wwwroot/images/screenshots/7.png)
+![homepage](grow/wwwroot/images/screenshots/8.png)
+</p>
+</details>
+
+## App functionality
+1. Register/log in
+1. Add plants with estimated watering and lighting requirements
+1. Edit plant general details
+1. Edit plant water and/or lighting requirements
+1. Delete a plant
+1. View all plants
+1. View plants by watering requirements
+
+As users notice a plant that is not thriving, they can update the plant's water and/or lighting requirements. The history of these changes is displayed on each plant detail, so a user can track and optimize each plant's needs.
 
 ## Setup
 
@@ -26,7 +52,7 @@ This app uses CloudinaryDotNet to upload images and stores the URL in the Grow D
 1. Create a branch named `initial-setup`.
 1. Go into the project directory and set up your appsettings
     ```sh
-    cd Bangazon
+    cd Grow
     dotnet restore
     cp appsettings.json.template appsettings.json
     ```
@@ -55,5 +81,4 @@ Once your appsettings are updated and you've entered in some seed data, you shou
 1. Once Visual Studio shows you the migration file, execute `Update-Database` to generate your tables.
 1. Use the SQL Server Object Explorer to verify that everything worked as expected.
 
-### Grow ERD
-![ERD](GrowERD.png)
+
